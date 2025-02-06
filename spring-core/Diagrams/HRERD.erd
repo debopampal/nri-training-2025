@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<diagram version="1" name="HRERD">
+	<entities>
+		<data-source id="oracle_thin-194d88948f0-467b1e3a17d39693">
+			<entity id="1" name="COUNTRIES" fq-name="HR.COUNTRIES">
+				<path name="HR"/>
+			</entity>
+			<entity id="2" name="DEPARTMENTS" fq-name="HR.DEPARTMENTS">
+				<path name="HR"/>
+			</entity>
+			<entity id="3" name="EMPLOYEE" fq-name="HR.EMPLOYEE">
+				<path name="HR"/>
+			</entity>
+			<entity id="4" name="EMPLOYEES" fq-name="HR.EMPLOYEES">
+				<path name="HR"/>
+			</entity>
+			<entity id="5" name="HTE_EMPLOYEE" fq-name="HR.HTE_EMPLOYEE">
+				<path name="HR"/>
+			</entity>
+			<entity id="6" name="JOBS" fq-name="HR.JOBS">
+				<path name="HR"/>
+			</entity>
+			<entity id="7" name="JOB_HISTORY" fq-name="HR.JOB_HISTORY">
+				<path name="HR"/>
+			</entity>
+			<entity id="8" name="LOCATIONS" fq-name="HR.LOCATIONS">
+				<path name="HR"/>
+			</entity>
+			<entity id="9" name="REGIONS" fq-name="HR.REGIONS">
+				<path name="HR"/>
+			</entity>
+			<entity id="10" name="USERS" fq-name="HR.USERS">
+				<path name="HR"/>
+			</entity>
+		</data-source>
+	</entities>
+	<relations>
+		<relation name="LOC_C_ID_FK" fq-name="HR.LOCATIONS.LOC_C_ID_FK" type="fk" pk-ref="1" fk-ref="8"/>
+		<relation name="EMP_DEPT_FK" fq-name="HR.EMPLOYEES.EMP_DEPT_FK" type="fk" pk-ref="2" fk-ref="4"/>
+		<relation name="JHIST_DEPT_FK" fq-name="HR.JOB_HISTORY.JHIST_DEPT_FK" type="fk" pk-ref="2" fk-ref="7"/>
+		<relation name="DEPT_MGR_FK" fq-name="HR.DEPARTMENTS.DEPT_MGR_FK" type="fk" pk-ref="4" fk-ref="2"/>
+		<relation name="EMP_MANAGER_FK" fq-name="HR.EMPLOYEES.EMP_MANAGER_FK" type="fk" pk-ref="4" fk-ref="4"/>
+		<relation name="JHIST_EMP_FK" fq-name="HR.JOB_HISTORY.JHIST_EMP_FK" type="fk" pk-ref="4" fk-ref="7"/>
+		<relation name="EMP_JOB_FK" fq-name="HR.EMPLOYEES.EMP_JOB_FK" type="fk" pk-ref="6" fk-ref="4"/>
+		<relation name="JHIST_JOB_FK" fq-name="HR.JOB_HISTORY.JHIST_JOB_FK" type="fk" pk-ref="6" fk-ref="7"/>
+		<relation name="DEPT_LOC_FK" fq-name="HR.DEPARTMENTS.DEPT_LOC_FK" type="fk" pk-ref="8" fk-ref="2"/>
+		<relation name="COUNTR_REG_FK" fq-name="HR.COUNTRIES.COUNTR_REG_FK" type="fk" pk-ref="9" fk-ref="1"/>
+	</relations>
+</diagram>
