@@ -8,4 +8,6 @@ import com.ace.springdatajpademo.entity.Employee;
 
 public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 	List<Employee> findEmployeeByFirstNameAndLastName(String firstName, String lastName);
+	List<Employee> findByFirstNameLike(String firstName);
+	List<Employee> findByFirstNameLikeOrLastNameLike(String firstName, String lastName);
 }
