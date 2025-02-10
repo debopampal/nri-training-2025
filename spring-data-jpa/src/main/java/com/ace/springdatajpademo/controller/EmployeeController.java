@@ -1,6 +1,7 @@
 package com.ace.springdatajpademo.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +26,8 @@ public class EmployeeController {
 	) {
 		List<Employee> employees = lastName != null
 				? this.employeeService.getEmployeesByFirstNameAndLastName(firstName, lastName)
-				: this.employeeService.getEmployeesByFirstNameLike(firstName);
+//				: this.employeeService.getEmployeesByFirstNameLike(firstName);
+				: this.employeeService.getEmployeeByFirstName(firstName);
 		return ResponseEntity.ok(employees);
 	}
 	
@@ -37,4 +39,29 @@ public class EmployeeController {
 		List<Employee> employees = this.employeeService.getEmployeesByFirstNameLikeOrLastNameLike(firstName, lastName);
 		return ResponseEntity.ok(employees);
 	}
+	
+	@GetMapping("/searchByDepartment")
+	public ResponseEntity<List<Employee>> searchEmpployeeByDepartment(@RequestParam() String department) {
+		List<Employee> employees = this.employeeService.getEmployeesByDepartment(department);
+		return ResponseEntity.ok(employees);
+	}
+	
+	@GetMapping("/getEmployeeInMap")
+	public ResponseEntity<Map<String, Object>> getEmployeeInMap(
+			@RequestParam() String firstName,
+			@RequestParam() String lastName
+	) {
+		Map<String, Object> employee = this.employeeService.getEmployeeInMap(firstName, lastName);
+		return ResponseEntity.ok(employee);
+	}
+	
+	@GetMapping("/getEmployeesWithinSalaryRange")
+	public ResponseEntity<List<Map<String, Object>>> getEmployeesBySalaryRange(
+			@RequestParam() Double salaryStart,
+			@RequestParam() Double salaryEnd
+	) {
+		List<Map<String, Object>> employee = this.employeeService.getEmployeesBySalaryRange(salaryStart, salaryEnd);
+		return ResponseEntity.ok(employee);
+	}
+	
 }
