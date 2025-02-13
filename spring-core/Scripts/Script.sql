@@ -35,4 +35,24 @@ select
     offset
         1 rows 
     fetch
-        first 1 rows only
+        first 1 rows ONLY;
+
+select
+        u1_0.id,
+        u1_0.password,
+        u1_0.username 
+    from
+        user u1_0 
+    where
+        u1_0.id=1;
+
+ALTER TABLE HR.USER RENAME TO USERS;
+
+select
+        u1_0.id,
+        u1_0.password,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.id=1

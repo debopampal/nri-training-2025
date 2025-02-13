@@ -1,5 +1,6 @@
 package com.ace.springsecuritydemo.configuration;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -20,39 +21,43 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SecurityConfig {
 	
-	@Bean
-	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-		return http
-				.csrf(customizer -> customizer.disable())
-				.authorizeHttpRequests(request-> request.anyRequest().authenticated())
-				.httpBasic(Customizer.withDefaults())
-				.sessionManagement(session->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-				.build();
-	}
+	@Autowired
+	private UserDetailsService userDetailsService;
 	
 	@Bean
-	public UserDetailsService userDetailsService() {
-		UserDetails ud1 = User
-				.withDefaultPasswordEncoder()
-				.username("divya")
-				.password("12345")
-				.roles("EMP")
-				.build();
-		
-		UserDetails ud2 = User
-				.withDefaultPasswordEncoder()
-				.username("rohit")
-				.password("12345")
-				.roles("EMP")
-				.build();
-		
-		return new InMemoryUserDetailsManager(ud1, ud2);
+	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+		return http.csrf(customizer -> customizer.disable())
+				.authorizeHttpRequests(
+						request -> request
+						.requestMatchers("api/users/register").permitAll()
+						.anyRequest().authenticated())
+				.httpBasic(Customizer.withDefaults())
+				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)).build();
 	}
+	
+//	@Bean
+//	public UserDetailsService userDetailsService() {
+//		UserDetails ud1 = User
+//				.withDefaultPasswordEncoder()
+//				.username("divya")
+//				.password("12345")
+//				.roles("EMP")
+//				.build();
+//		
+//		UserDetails ud2 = User
+//				.withDefaultPasswordEncoder()
+//				.username("rohit")
+//				.password("12345")
+//				.roles("EMP")
+//				.build();
+//		
+//		return new InMemoryUserDetailsManager(ud1, ud2);
+//	}
 	
 	@Bean
 	public AuthenticationProvider authenticationProvider() {
 		DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-		provider.setUserDetailsService(userDetailsService());
+		provider.setUserDetailsService(userDetailsService);
 		
 		return provider;
 	}
